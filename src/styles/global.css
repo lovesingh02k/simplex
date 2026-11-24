@@ -1,0 +1,188 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-display: 'Archivo Variable', 'Archivo', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, monospace;
+  --font-tech: 'IBM Plex Mono', ui-monospace, SFMono-Regular, monospace;
+
+  /* Ink / navy scale – derived from the brochure's deep blue */
+  --color-ink-950: #05080f;
+  --color-ink-900: #070c18;
+  --color-ink-850: #0a1122;
+  --color-ink-800: #0e172d;
+  --color-ink-700: #16223f;
+  --color-ink-600: #22304f;
+  --color-ink-500: #3a4866;
+
+  /* Steel greys */
+  --color-steel-50: #f5f6f8;
+  --color-steel-100: #eceef2;
+  --color-steel-200: #dde1e8;
+  --color-steel-300: #c3c9d4;
+  --color-steel-400: #9aa3b3;
+  --color-steel-500: #6f7a8e;
+  --color-steel-600: #535d70;
+
+  /* Industrial orange accent */
+  --color-forge-300: #ffb27a;
+  --color-forge-400: #ff8a3d;
+  --color-forge-500: #f26a1b;
+  --color-forge-600: #d9560c;
+
+  --ease-industrial: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+    /* never allow sideways scrolling (hidden = fallback for browsers without clip) */
+    overflow-x: hidden;
+    overflow-x: clip;
+    /* native scrollbar hidden for a clean edge */
+    scrollbar-width: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    background: var(--color-ink-900);
+  }
+  body {
+    @apply bg-steel-50 font-sans text-ink-800;
+    overflow-x: hidden;
+    overflow-x: clip;
+    max-width: 100%;
+  }
+  html::-webkit-scrollbar {
+    display: none;
+  }
+  ::selection {
+    background: var(--color-forge-500);
+    color: white;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-forge-400);
+    outline-offset: 3px;
+  }
+  img {
+    max-width: 100%;
+  }
+}
+
+/* Lenis */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: clip;
+}
+
+@utility container-x {
+  width: 100%;
+  max-width: 1360px;
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 4vw, 3rem);
+}
+
+@utility display-tight {
+  font-family: var(--font-display);
+  font-stretch: 112%;
+  letter-spacing: -0.02em;
+  line-height: 0.98;
+}
+
+/* Brochure photographs are small prints – a consistent grade + grain keeps them cohesive. */
+@utility photo-grade {
+  filter: saturate(0.94) contrast(1.03);
+}
+
+@utility grain {
+  position: relative;
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.07;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+}
+
+@utility blueprint-grid {
+  background-image:
+    linear-gradient(to right, rgb(255 255 255 / 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(255 255 255 / 0.045) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+
+@utility blueprint-grid-light {
+  background-image:
+    linear-gradient(to right, rgb(14 23 45 / 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(14 23 45 / 0.05) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Shared hover language: cards lift slightly with a soft shadow and an orange top edge. */
+@utility card-lift {
+  position: relative;
+  /* uses the 'translate' property – Motion writes inline 'transform' on animated elements */
+  transition:
+    translate 0.5s var(--ease-industrial),
+    box-shadow 0.5s var(--ease-industrial),
+    border-color 0.4s ease;
+  &::before {
+    content: '';
+    position: absolute;
+    inset: -1px -1px auto -1px;
+    height: 2px;
+    background: var(--color-forge-500);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.6s var(--ease-industrial);
+  }
+  &:hover,
+  &:focus-within {
+    translate: 0 -4px;
+    box-shadow: 0 24px 50px -28px rgb(7 12 24 / 0.45);
+  }
+  &:hover::before,
+  &:focus-within::before {
+    transform: scaleX(1);
+  }
+}
+
+/* Chips/tags: fill with brand ink on hover. */
+@utility chip-hover {
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease,
+    transform 0.3s ease;
+  &:hover {
+    background-color: var(--color-ink-800);
+    border-color: var(--color-ink-800);
+    color: white;
+    transform: translateY(-1px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-lift:hover,
+  .card-lift:focus-within {
+    translate: none;
+  }
+}

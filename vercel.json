@@ -1,0 +1,56 @@
+{
+  "rewrites": [
+    {
+      "source": "/about",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/products",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/industries",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/quality",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/infrastructure",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/contact",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/credits",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/products/wheels-forged-cast",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/products/shafts-axles",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/products/rings",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/products/gear-pinion",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/products/rope-drum-eot-crane",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/products/specialised-components",
+      "destination": "/index.html"
+    }
+  ]
+}
